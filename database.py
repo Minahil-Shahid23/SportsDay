@@ -1,13 +1,28 @@
+import os
+import shutil
 import sqlite3
 from flask import g
 
 DATABASE = 'sports_day.db'
 
+# ---------------------------------------------------------------------------
+# Vercel Dynamic Path Handler
+# ---------------------------------------------------------------------------
+# Agar server Vercel par hai to /tmp folder use hoga, warna local computer par normal file
+if os.path.exists("/tmp"):
+    TEMP_DATABASE = os.path.join("/tmp", DATABASE)
+    # Agar original database maujood hai aur abhi tak /tmp mein copy nahi hui, to copy kar dein
+    if os.path.exists(DATABASE) and not os.path.exists(TEMP_DATABASE):
+        shutil.copyfile(DATABASE, TEMP_DATABASE)
+    DB_PATH = TEMP_DATABASE
+else:
+    DB_PATH = DATABASE
+
 
 def get_db():
     """Get a database connection, reusing the one on the Flask g object."""
     if 'db' not in g:
-        g.db = sqlite3.connect(DATABASE)
+        g.db = sqlite3.connect(DB_PATH)  # Use dynamically updated path
         g.db.row_factory = sqlite3.Row
         g.db.execute("PRAGMA foreign_keys = ON")
     return g.db
@@ -22,7 +37,7 @@ def close_db(e=None):
 
 def init_db():
     """Create all tables and seed initial data."""
-    db = sqlite3.connect(DATABASE)
+    db = sqlite3.connect(DB_PATH)  # Use dynamically updated path
     db.row_factory = sqlite3.Row
     db.execute("PRAGMA foreign_keys = ON")
 
