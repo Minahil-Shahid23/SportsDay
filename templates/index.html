@@ -2,9 +2,8 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero-section text-white text-center py-5 mb-5">
-    <div class="container">
+<section class="hero-section text-white text-center py-5 mb-5" style="background: linear-gradient(rgba(13, 110, 253, 0.85), rgba(33, 37, 41, 0.9)), url('{{ url_for('static', filename='images/hero-bg.png') }}') no-repeat center center; background-size: cover; min-height: 350px; display: flex; align-items: center;">
+    <div class="container w-100">
         <div class="hero-content py-4">
             <div class="mb-3">
                 <i class="bi bi-trophy-fill display-1 text-warning"></i>
@@ -28,7 +27,6 @@
     </div>
 </section>
 
-<!-- Stats Banner -->
 <div class="container mb-5">
     <div class="row g-3 text-center">
         <div class="col-6 col-md-3">
@@ -70,7 +68,6 @@
     </div>
 </div>
 
-<!-- Available Sports -->
 <div class="container">
     <h2 class="fw-bold mb-4 text-center">
         <i class="bi bi-collection-fill text-primary me-2"></i>Available Sports
@@ -81,7 +78,7 @@
         {% for sport in sports %}
         <div class="col-md-6 col-lg-4">
             <div class="card sport-card h-100 border-0 shadow-sm">
-                <div class="card-header sport-card-header d-flex align-items-center">
+                <div class="card-header sport-card-header d-flex align-items-center" style="background-color: #0d6efd;">
                     <i class="bi bi-lightning-fill text-warning me-2"></i>
                     <h5 class="mb-0 fw-bold text-white">{{ sport.name }}</h5>
                     {% if sport.slots_remaining <= 5 %}
