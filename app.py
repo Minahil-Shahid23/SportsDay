@@ -19,6 +19,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db, close_db, init_db
 
 # ---------------------------------------------------------------------------
+# Vercel Writable SQLite Database Fix
+# ---------------------------------------------------------------------------
+import os
+import shutil
+
+DATABASE_NAME = "sports_day.db"
+TEMP_DB_PATH = os.path.join("/tmp", DATABASE_NAME)
+
+# Agar ye server Vercel par chal raha hai, to database ko writable folder (/tmp) mein copy karein
+if os.path.exists(DATABASE_NAME) and not os.path.exists(TEMP_DB_PATH):
+    shutil.copyfile(DATABASE_NAME, TEMP_DB_PATH)
+
+# ---------------------------------------------------------------------------
 # App Configuration
 # ---------------------------------------------------------------------------
 app = Flask(__name__)
