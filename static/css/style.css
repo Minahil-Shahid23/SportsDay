@@ -1,0 +1,395 @@
+/* ═══════════════════════════════════════════════
+   Sports Day 2026 — Custom Stylesheet
+   University of the Punjab, Lahore
+   Theme: Earthy Warmth × Forest Green
+═══════════════════════════════════════════════ */
+
+:root {
+    --primary:   #2d1b0e;   /* deep espresso brown  */
+    --accent:    #c9570a;   /* burnt orange          */
+    --secondary: #3d5c3a;   /* forest green          */
+    --sand:      #f5e6c8;   /* warm sand             */
+    --light:     #fdf8f0;   /* off-white canvas      */
+    --muted:     #8a7560;   /* warm mid-gray         */
+    --border:    #e0ccaa;   /* tan border            */
+}
+
+/* ── Body & Base ── */
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: var(--light);
+    color: #3a2e22;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* ── Hero Section ── */
+.hero-section {
+    background-color: var(--primary);
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 40px,
+            rgba(255,255,255,0.015) 40px,
+            rgba(255,255,255,0.015) 80px
+        );
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid var(--accent);
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(201, 87, 10, 0.08);
+    border-radius: 50%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Navbar ── */
+.navbar {
+    background-color: var(--primary) !important;
+    border-bottom: 2px solid var(--accent);
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    font-family: 'Georgia', serif;
+    color: var(--sand) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(245, 230, 200, 0.8);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--sand);
+}
+
+/* ── Cards ── */
+.card {
+    border-radius: 4px;
+    border: 1px solid var(--border) !important;
+    background-color: #fff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sport-card {
+    overflow: hidden;
+}
+
+.sport-card-header {
+    background-color: var(--primary);
+    border-bottom: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    color: var(--sand);
+}
+
+.stat-card:hover,
+.card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(45, 27, 14, 0.1) !important;
+}
+
+/* ── Stat badge ── */
+.fee-badge {
+    font-size: 0.85rem !important;
+    font-weight: 600;
+    background-color: var(--accent) !important;
+    color: #fff8f0 !important;
+    border-radius: 3px;
+    padding: 3px 10px !important;
+    letter-spacing: 0.3px;
+}
+
+/* ── Rules text ── */
+.rules-text {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    border-left: 3px solid var(--accent);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ── Info boxes ── */
+.info-box {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.info-box:hover {
+    border-color: var(--accent);
+    background-color: #fdf3e7;
+}
+
+/* ── Payment QR ── */
+.qr-container {
+    display: inline-block;
+    padding: 12px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+}
+
+.amount-display {
+    padding: 12px 24px;
+    background-color: #f0f7ee;
+    border-radius: 4px;
+    border: 2px dashed var(--secondary);
+    display: inline-block;
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+/* ── Tables ── */
+.table {
+    border-color: var(--border);
+}
+
+.table thead {
+    background-color: var(--primary);
+    color: var(--sand);
+}
+
+.table thead th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    border: none !important;
+    padding: 0.75rem 1rem;
+}
+
+.table tbody tr:hover {
+    background-color: #fdf3e7;
+}
+
+.table tbody td {
+    border-color: var(--border);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.9rem;
+}
+
+/* ── Badges ── */
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    border-radius: 3px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.78rem;
+}
+
+.badge.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.badge.bg-success {
+    background-color: var(--secondary) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--accent) !important;
+    color: #fff !important;
+}
+
+/* ── Forms ── */
+.form-control,
+.form-select {
+    border-color: var(--border);
+    border-radius: 4px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.9rem;
+    color: #3a2e22;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(201, 87, 10, 0.15);
+}
+
+.form-label {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── Footer ── */
+.footer {
+    margin-top: auto;
+    background-color: var(--primary) !important;
+    border-top: 3px solid var(--accent);
+    color: rgba(245, 230, 200, 0.75);
+}
+
+/* ── Admin sidebar hint ── */
+.col-lg-2-4 {
+    flex: 0 0 auto;
+    width: 20%;
+}
+
+@media (max-width: 992px) {
+    .col-lg-2-4 { width: 50%; }
+}
+
+@media (max-width: 576px) {
+    .col-lg-2-4 { width: 100%; }
+    .hero-section { padding: 2.5rem 0 !important; }
+}
+
+/* ── Alerts ── */
+.alert {
+    border-radius: 4px;
+    border: none;
+    border-left: 4px solid;
+    font-size: 0.9rem;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.alert-success {
+    background-color: #f0f7ee;
+    border-left-color: var(--secondary);
+    color: #2a4028;
+}
+
+.alert-warning {
+    background-color: #fdf3e7;
+    border-left-color: var(--accent);
+    color: #6b3008;
+}
+
+.alert-danger {
+    background-color: #fdecea;
+    border-left-color: #b91c1c;
+    color: #7f1d1d;
+}
+
+.alert-info {
+    background-color: #f0f7ee;
+    border-left-color: var(--secondary);
+    color: #2a4028;
+}
+
+/* ── Buttons ── */
+.btn {
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.875rem;
+    letter-spacing: 0.3px;
+    transition: all 0.18s;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #a8450a;
+    border-color: #a8450a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(201, 87, 10, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-outline-primary {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #2f4a2d;
+    border-color: #2f4a2d;
+}
+
+/* ── Pagination ── */
+.page-link {
+    color: var(--accent);
+    border-color: var(--border);
+    border-radius: 3px !important;
+    margin: 0 2px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.875rem;
+}
+
+.page-link:hover {
+    color: var(--accent);
+    background-color: #fdf3e7;
+    border-color: var(--accent);
+}
+
+.page-item.active .page-link {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* ── Spinner overlay ── */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ── Scrollbar (webkit) ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--light); }
+::-webkit-scrollbar-thumb { background: #c5ad8a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ── Section headings utility ── */
+.section-label {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+/* ── Accent rule divider ── */
+.divider-accent {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    margin: 1.5rem 0;
+}

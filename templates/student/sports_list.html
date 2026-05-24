@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}Browse Sports{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">
+            <i class="bi bi-collection-fill text-primary me-2"></i>Browse Sports
+        </h2>
+    </div>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('sports_list') }}" class="mb-4">
+        <div class="input-group input-group-lg shadow-sm" style="max-width:500px;">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" class="form-control border-start-0" name="q"
+                   value="{{ search }}" placeholder="Search by sport name or venue...">
+            <button class="btn btn-primary px-4" type="submit">Search</button>
+            {% if search %}
+            <a href="{{ url_for('sports_list') }}" class="btn btn-outline-secondary">Clear</a>
+            {% endif %}
+        </div>
+    </form>
+
+    {% if search %}
+    <p class="text-muted mb-3">Showing results for: <strong>"{{ search }}"</strong></p>
+    {% endif %}
+
+    {% if sports %}
+    <div class="row g-4">
+        {% for sport in sports %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card sport-card h-100 border-0 shadow-sm">
+                <div class="card-header sport-card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold text-white">{{ sport.name }}</h5>
+                        {% if sport.already_registered %}
+                        <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Registered</span>
+                        {% elif sport.slots_remaining <= 0 %}
+                        <span class="badge bg-secondary">Full</span>
+                        {% elif sport.slots_remaining <= 5 %}
+                        <span class="badge bg-warning text-dark">{{ sport.slots_remaining }} left</span>
+                        {% else %}
+                        <span class="badge bg-light text-dark">Open</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small mb-3">{{ sport.description or '' }}</p>
+                    <div class="mb-2">
+                        <strong class="small text-uppercase text-muted">Rules Preview</strong>
+                        <p class="small text-muted mt-1" style="max-height:60px;overflow:hidden;">
+                            {{ (sport.rules or 'See full details for rules.')[:120] }}{% if sport.rules and sport.rules|length > 120 %}...{% endif %}
+                        </p>
+                    </div>
+                    <hr class="my-2">
+                    <div class="row g-2 small">
+                        <div class="col-6">
+                            <i class="bi bi-currency-rupee text-success me-1"></i>
+                            <strong>PKR {{ sport.fee|int }}</strong>
+                        </div>
+                        <div class="col-6">
+                            <i class="bi bi-people text-primary me-1"></i>
+                            {{ sport.slots_remaining }}/{{ sport.max_players }} slots
+                        </div>
+                        <div class="col-12">
+                            <i class="bi bi-geo-alt text-danger me-1"></i>{{ sport.venue or 'TBA' }}
+                        </div>
+                        <div class="col-12">
+                            <i class="bi bi-calendar3 text-primary me-1"></i>{{ sport.event_date or 'TBA' }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    {% if sport.already_registered %}
+                    <span class="btn btn-success w-100 disabled">
+                        <i class="bi bi-check-circle me-1"></i>Already Registered
+                    </span>
+                    {% elif sport.slots_remaining <= 0 %}
+                    <span class="btn btn-secondary w-100 disabled">
+                        <i class="bi bi-x-circle me-1"></i>No Slots Available
+                    </span>
+                    {% else %}
+                    <a href="{{ url_for('sport_detail', sport_id=sport.id) }}" class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-right-circle me-1"></i>View & Register
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-search display-1 text-muted"></i>
+        <p class="lead text-muted mt-3">
+            {% if search %}No sports found for "{{ search }}".{% else %}No active sports available.{% endif %}
+        </p>
+        {% if search %}
+        <a href="{{ url_for('sports_list') }}" class="btn btn-outline-primary">View All Sports</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

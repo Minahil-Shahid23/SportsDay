@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-white text-center py-5 mb-5">
+    <div class="container">
+        <div class="hero-content py-4">
+            <div class="mb-3">
+                <i class="bi bi-trophy-fill display-1 text-warning"></i>
+            </div>
+            <h1 class="display-4 fw-bold">🏆 Sports Day 2026</h1>
+            <p class="lead mb-4">University of the Punjab, Lahore &mdash; Department of Computer Science</p>
+            <p class="fs-5 mb-4">Register for your favourite sports, compete with peers, and make unforgettable memories!</p>
+            {% if not session.get('user_id') %}
+            <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg me-3 px-4 fw-bold">
+                <i class="bi bi-person-plus me-2"></i>Register Now
+            </a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg px-4">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+            </a>
+            {% else %}
+            <a href="{{ url_for('sports_list') }}" class="btn btn-warning btn-lg px-4 fw-bold">
+                <i class="bi bi-collection me-2"></i>Browse Sports
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Stats Banner -->
+<div class="container mb-5">
+    <div class="row g-3 text-center">
+        <div class="col-6 col-md-3">
+            <div class="stat-card card border-0 shadow-sm h-100">
+                <div class="card-body py-3">
+                    <i class="bi bi-collection-fill fs-2 text-primary mb-2"></i>
+                    <div class="fw-bold fs-3">{{ sports|length }}</div>
+                    <div class="text-muted small">Sports Available</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card card border-0 shadow-sm h-100">
+                <div class="card-body py-3">
+                    <i class="bi bi-calendar-event fs-2 text-success mb-2"></i>
+                    <div class="fw-bold fs-3">June</div>
+                    <div class="text-muted small">Event Month</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card card border-0 shadow-sm h-100">
+                <div class="card-body py-3">
+                    <i class="bi bi-geo-alt-fill fs-2 text-danger mb-2"></i>
+                    <div class="fw-bold fs-3">PU</div>
+                    <div class="text-muted small">Lahore Campus</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card card border-0 shadow-sm h-100">
+                <div class="card-body py-3">
+                    <i class="bi bi-people-fill fs-2 text-warning mb-2"></i>
+                    <div class="fw-bold fs-3">Open</div>
+                    <div class="text-muted small">Registration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Available Sports -->
+<div class="container">
+    <h2 class="fw-bold mb-4 text-center">
+        <i class="bi bi-collection-fill text-primary me-2"></i>Available Sports
+    </h2>
+
+    {% if sports %}
+    <div class="row g-4">
+        {% for sport in sports %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card sport-card h-100 border-0 shadow-sm">
+                <div class="card-header sport-card-header d-flex align-items-center">
+                    <i class="bi bi-lightning-fill text-warning me-2"></i>
+                    <h5 class="mb-0 fw-bold text-white">{{ sport.name }}</h5>
+                    {% if sport.slots_remaining <= 5 %}
+                    <span class="badge bg-danger ms-auto">{{ sport.slots_remaining }} slots left</span>
+                    {% else %}
+                    <span class="badge bg-success ms-auto">Open</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <p class="text-muted small mb-2">{{ sport.description or 'A thrilling sports event.' }}</p>
+                    </div>
+                    <div class="sport-details">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-geo-alt text-danger me-2"></i>
+                            <span class="small">{{ sport.venue or 'TBA' }}</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-calendar3 text-primary me-2"></i>
+                            <span class="small">{{ sport.event_date or 'TBA' }}</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-people text-success me-2"></i>
+                            <span class="small">{{ sport.slots_remaining }} / {{ sport.max_players }} slots remaining</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+                    <span class="fee-badge badge bg-primary fs-6">
+                        <i class="bi bi-currency-rupee me-1"></i>{{ sport.fee|int }} PKR
+                    </span>
+                    {% if session.get('user_id') and session.get('user_role') == 'student' %}
+                    <a href="{{ url_for('sport_detail', sport_id=sport.id) }}" class="btn btn-primary btn-sm">
+                        View & Register
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-sm">
+                        Login to Register
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-calendar-x display-1 text-muted"></i>
+        <p class="lead text-muted mt-3">No active sports available at the moment.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

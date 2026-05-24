@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Manage Sports{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">
+            <i class="bi bi-collection-fill text-primary me-2"></i>Manage Sports
+        </h2>
+        <a href="{{ url_for('admin_add_sport') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i>Add New Sport
+        </a>
+    </div>
+
+    {% if sports %}
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Fee (PKR)</th>
+                        <th>Max Players</th>
+                        <th>Registrations</th>
+                        <th>Venue</th>
+                        <th>Event Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sport in sports %}
+                    <tr>
+                        <td class="text-muted small">{{ loop.index }}</td>
+                        <td class="fw-semibold">{{ sport.name }}</td>
+                        <td>{{ sport.fee|int }}</td>
+                        <td>{{ sport.max_players }}</td>
+                        <td>
+                            <span class="badge bg-info text-dark">{{ sport.reg_count }}</span>
+                        </td>
+                        <td class="small text-muted">{{ sport.venue or '—' }}</td>
+                        <td class="small">{{ sport.event_date or '—' }}</td>
+                        <td>
+                            {% if sport.is_active %}
+                            <span class="badge bg-success">Active</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('admin_edit_sport', sport_id=sport.id) }}"
+                                   class="btn btn-outline-primary" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('admin_toggle_sport', sport_id=sport.id) }}"
+                                      class="d-inline">
+                                    <button type="submit" class="btn btn-outline-{% if sport.is_active %}warning{% else %}success{% endif %}"
+                                            title="{% if sport.is_active %}Deactivate{% else %}Activate{% endif %}">
+                                        <i class="bi bi-toggle-{% if sport.is_active %}on{% else %}off{% endif %}"></i>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ url_for('admin_delete_sport', sport_id=sport.id) }}"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Delete sport {{ sport.name }}? This cannot be undone.')">
+                                    <button type="submit" class="btn btn-outline-danger" title="Delete"
+                                            {% if sport.reg_count > 0 %}disabled title="Cannot delete: has registrations"{% endif %}>
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-collection display-1 text-muted"></i>
+        <p class="lead text-muted mt-3">No sports added yet.</p>
+        <a href="{{ url_for('admin_add_sport') }}" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-lg me-1"></i>Add First Sport
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
