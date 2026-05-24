@@ -1,12 +1,5 @@
 # Sports Day Registration System
 
-**Student:** [Your Full Name]
-**Roll No:** [Your Roll Number]
-**Semester:** BSCS 6th — Spring 2026
-**Course:** Software Construction and Development
-
----
-
 ## How to Run
 
 ```bash
